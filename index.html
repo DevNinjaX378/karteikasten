@@ -313,6 +313,7 @@ footer{margin-top:20px;text-align:center;font-size:11px;color:var(--paper-text-d
 <button class="iconbtn" id="browseBtn" title="Alle Karten durchsuchen">≣</button>
 <button class="chip" id="driveSaveBtn" title="Sicherungsdatei speichern (für Learning German/Karteikasten)">⬇ Sichern</button>
 <button class="chip" id="driveLoadBtn" title="Eine zuvor gespeicherte Sicherungsdatei laden">⬆ Laden</button>
+<button class="chip" id="syncBtn" title="Mit progress.json aus dem Repo abgleichen (höherer Stand gewinnt pro Wort)">🔄 Abgleichen</button>
 <input type="file" id="importFile" accept="application/json" style="display:none;">
 </div>
 
@@ -458,6 +459,53 @@ function driveLoadFile(file){
   };
   reader.onerror = ()=> showToast('Datei konnte nicht gelesen werden.', true);
   reader.readAsText(file);
+}
+
+// Pulls progress.json from the repo (if present) and merges it into local
+// progress — higher counter wins per word, so this can only add ground
+// gained on another device, never erase progress made on this one.
+// Pure pull, no write-back to GitHub: nothing here ever pushes anything,
+// so there's no token or write credential involved at all.
+async function fetchRemoteProgress(){
+  try{
+    const res = await fetch('progress.json', { cache: 'no-store' });
+    if(!res.ok) return null;
+    return await res.json();
+  }catch(e){ return null; }
+}
+
+function mergeRemoteProgress(remote){
+  if(!remote || typeof remote.progress !== 'object') return 0;
+  let updated = 0;
+  Object.keys(remote.progress).forEach(id=>{
+    const rv = remote.progress[id];
+    const remoteCount = typeof rv === 'number' ? rv : (rv === 'known' ? MASTERY_THRESHOLD : rv === 'learning' ? 0 : null);
+    if(remoteCount === null) return;
+    if(remoteCount > countOf(id)){
+      progress[id] = remoteCount;
+      updated++;
+    }
+  });
+  return updated;
+}
+
+async function syncFromRemote(manual){
+  const remote = await fetchRemoteProgress();
+  if(!remote){
+    if(manual) showToast('Keine progress.json im Repo gefunden.', true);
+    return;
+  }
+  const updated = mergeRemoteProgress(remote);
+  if(updated > 0){
+    saveProgress();
+    updateStats();
+    buildDeck();
+    renderCard();
+    if(browsing) renderCatalog();
+  }
+  if(manual){
+    showToast(updated > 0 ? `${updated} Karte(n) aktualisiert ✓` : 'Bereits aktuell ✓');
+  }
 }
 
 // Weighted shuffle: cards with a lower mastery counter get a higher chance
@@ -649,6 +697,7 @@ $('shuffleBtn').addEventListener('click', ()=>{ buildDeck(); renderCard(); });
 $('browseBtn').addEventListener('click', ()=> setBrowsing(!browsing));
 $('driveSaveBtn').addEventListener('click', driveSave);
 $('driveLoadBtn').addEventListener('click', ()=> $('importFile').click());
+$('syncBtn').addEventListener('click', ()=> syncFromRemote(true));
 $('importFile').addEventListener('change', (e)=>{
   const file = e.target.files[0];
   if(file) driveLoadFile(file);
@@ -692,6 +741,7 @@ document.addEventListener('keydown', (e)=>{
 async function init(){
   VOCAB = await fetch('vocab.json').then(r => r.json());
   await loadProgress();
+  await syncFromRemote(false);
   $('directionBtn').textContent = direction === 'de-en' ? 'DE → EN' : 'EN → DE';
   updateStats();
   buildDeck();
