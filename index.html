@@ -313,7 +313,8 @@ footer{margin-top:20px;text-align:center;font-size:11px;color:var(--paper-text-d
 <button class="iconbtn" id="browseBtn" title="Alle Karten durchsuchen">≣</button>
 <button class="chip" id="driveSaveBtn" title="Sicherungsdatei speichern (für Learning German/Karteikasten)">⬇ Sichern</button>
 <button class="chip" id="driveLoadBtn" title="Eine zuvor gespeicherte Sicherungsdatei laden">⬆ Laden</button>
-<button class="chip" id="syncBtn" title="Mit progress.json aus dem Repo abgleichen (höherer Stand gewinnt pro Wort)">🔄 Abgleichen</button>
+<button class="chip" id="syncBtn" title="Mit GitHub abgleichen — lädt höhere Stände herunter und lädt eigene Fortschritte hoch">🔄 Abgleichen</button>
+<button class="chip" id="tokenBtn" title="GitHub-Token setzen/ändern (nur in diesem Browser gespeichert, niemals im Quellcode)">🔑 Token</button>
 <input type="file" id="importFile" accept="application/json" style="display:none;">
 </div>
 
@@ -461,24 +462,95 @@ function driveLoadFile(file){
   reader.readAsText(file);
 }
 
-// Pulls progress.json from the repo (if present) and merges it into local
-// progress — higher counter wins per word, so this can only add ground
-// gained on another device, never erase progress made on this one.
-// Pure pull, no write-back to GitHub: nothing here ever pushes anything,
-// so there's no token or write credential involved at all.
-async function fetchRemoteProgress(){
-  try{
-    const res = await fetch('progress.json', { cache: 'no-store' });
-    if(!res.ok) return null;
-    return await res.json();
-  }catch(e){ return null; }
+// ---------- GitHub two-way sync ----------
+// Reads are unauthenticated (the repo is public) — no token needed to pull.
+// Writes need a token, which is entered once via the 🔑 Token button and
+// stored ONLY in this browser's localStorage. It is never written into
+// index.html itself, so nobody who simply visits the site can see it —
+// only someone with access to dev tools on THIS specific browser could.
+// For safety, this should be a fine-grained GitHub PAT scoped to only
+// this one repo, with Contents: Read & write — nothing else.
+const GH_OWNER = 'DevNinjaX378';
+const GH_REPO = 'karteikasten';
+const GH_BRANCH = 'main';
+const GH_PATH = 'progress.json';
+
+function getGithubToken(){
+  try{ return localStorage.getItem('karteikasten-github-token') || ''; }
+  catch(e){ return ''; }
 }
 
-function mergeRemoteProgress(remote){
-  if(!remote || typeof remote.progress !== 'object') return 0;
+function setGithubToken(){
+  const hasToken = !!getGithubToken();
+  const input = prompt(
+    hasToken
+      ? 'Token ist gesetzt. Neues Token eingeben um zu ersetzen, oder leer lassen + OK um es zu entfernen:'
+      : 'GitHub Personal Access Token einfügen (fine-grained, nur für dieses Repo, Contents: Read & write):',
+    ''
+  );
+  if(input === null) return; // cancelled
+  const trimmed = input.trim();
+  try{
+    if(trimmed){
+      localStorage.setItem('karteikasten-github-token', trimmed);
+      showToast('Token gespeichert (nur in diesem Browser).');
+    } else if(hasToken){
+      localStorage.removeItem('karteikasten-github-token');
+      showToast('Token entfernt.');
+    }
+  }catch(e){
+    showToast('Konnte Token nicht speichern.', true);
+  }
+}
+
+// UTF-8 safe base64 helpers (German umlauts, ≠, · etc. need this —
+// plain atob/btoa alone mangle anything outside Latin-1).
+function b64EncodeUtf8(str){ return btoa(unescape(encodeURIComponent(str))); }
+function b64DecodeUtf8(str){ return decodeURIComponent(escape(atob(str.replace(/\n/g,'')))); }
+
+// Fetches progress.json straight from the git blob via the Contents API
+// (not the GitHub Pages CDN) — this avoids the CDN propagation delay a
+// plain fetch('progress.json') would have right after a fresh push.
+async function githubGetProgressFile(){
+  const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}?ref=${GH_BRANCH}`;
+  const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
+  if(res.status === 404) return { data: null, sha: null };
+  if(!res.ok) throw new Error('GET ' + res.status);
+  const json = await res.json();
+  const data = JSON.parse(b64DecodeUtf8(json.content));
+  return { data, sha: json.sha };
+}
+
+async function githubPutProgressFile(payload, sha, message){
+  const token = getGithubToken();
+  if(!token) throw new Error('no-token');
+  const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}`;
+  const body = {
+    message,
+    content: b64EncodeUtf8(JSON.stringify(payload, null, 2)),
+    branch: GH_BRANCH
+  };
+  if(sha) body.sha = sha;
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'token ' + token,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+  if(!res.ok){
+    const text = await res.text();
+    throw new Error('PUT ' + res.status + ': ' + text);
+  }
+}
+
+function mergeRemoteProgress(remoteData){
+  if(!remoteData || typeof remoteData.progress !== 'object') return 0;
   let updated = 0;
-  Object.keys(remote.progress).forEach(id=>{
-    const rv = remote.progress[id];
+  Object.keys(remoteData.progress).forEach(id=>{
+    const rv = remoteData.progress[id];
     const remoteCount = typeof rv === 'number' ? rv : (rv === 'known' ? MASTERY_THRESHOLD : rv === 'learning' ? 0 : null);
     if(remoteCount === null) return;
     if(remoteCount > countOf(id)){
@@ -489,22 +561,64 @@ function mergeRemoteProgress(remote){
   return updated;
 }
 
-async function syncFromRemote(manual){
-  const remote = await fetchRemoteProgress();
-  if(!remote){
-    if(manual) showToast('Keine progress.json im Repo gefunden.', true);
+// Only true if this device has made genuine progress (count > 0) beyond
+// whatever's already in the remote file — avoids spuriously trying to
+// "push" when nothing meaningful has actually changed.
+function localAheadOfRemote(remoteData){
+  const remoteProgress = (remoteData && typeof remoteData.progress === 'object') ? remoteData.progress : {};
+  return Object.keys(progress).some(id=>{
+    const local = countOf(id);
+    if(local <= 0) return false;
+    const rv = remoteProgress[id];
+    const remoteCount = typeof rv === 'number' ? rv : (rv === 'known' ? MASTERY_THRESHOLD : rv === 'learning' ? 0 : 0);
+    return local > remoteCount;
+  });
+}
+
+async function syncWithGithub(manual){
+  let remote;
+  try{
+    remote = await githubGetProgressFile();
+  }catch(e){
+    if(manual) showToast('Konnte progress.json nicht laden.', true);
     return;
   }
-  const updated = mergeRemoteProgress(remote);
-  if(updated > 0){
+
+  const pulled = mergeRemoteProgress(remote.data);
+  if(pulled > 0){
     saveProgress();
     updateStats();
     buildDeck();
     renderCard();
     if(browsing) renderCatalog();
   }
-  if(manual){
-    showToast(updated > 0 ? `${updated} Karte(n) aktualisiert ✓` : 'Bereits aktuell ✓');
+
+  if(!localAheadOfRemote(remote.data)){
+    if(manual) showToast(pulled > 0 ? `${pulled} Karte(n) übernommen ✓` : 'Bereits aktuell ✓');
+    return;
+  }
+
+  const token = getGithubToken();
+  if(!token){
+    if(manual){
+      showToast(
+        pulled > 0
+          ? `${pulled} übernommen — kein Token gesetzt, eigener Fortschritt nicht hochgeladen`
+          : 'Eigener Fortschritt ist neuer, aber kein GitHub-Token gesetzt (🔑 Token)',
+        true
+      );
+    }
+    return;
+  }
+
+  try{
+    const payload = { progress, direction, savedAt: new Date().toISOString() };
+    await githubPutProgressFile(payload, remote.sha, 'Karteikasten: Fortschritt synchronisiert');
+    if(manual){
+      showToast(pulled > 0 ? `${pulled} übernommen, eigener Fortschritt hochgeladen ✓` : 'Fortschritt hochgeladen ✓');
+    }
+  }catch(e){
+    if(manual) showToast('Hochladen fehlgeschlagen — Token prüfen.', true);
   }
 }
 
@@ -697,7 +811,8 @@ $('shuffleBtn').addEventListener('click', ()=>{ buildDeck(); renderCard(); });
 $('browseBtn').addEventListener('click', ()=> setBrowsing(!browsing));
 $('driveSaveBtn').addEventListener('click', driveSave);
 $('driveLoadBtn').addEventListener('click', ()=> $('importFile').click());
-$('syncBtn').addEventListener('click', ()=> syncFromRemote(true));
+$('syncBtn').addEventListener('click', ()=> syncWithGithub(true));
+$('tokenBtn').addEventListener('click', setGithubToken);
 $('importFile').addEventListener('change', (e)=>{
   const file = e.target.files[0];
   if(file) driveLoadFile(file);
@@ -741,7 +856,7 @@ document.addEventListener('keydown', (e)=>{
 async function init(){
   VOCAB = await fetch('vocab.json').then(r => r.json());
   await loadProgress();
-  await syncFromRemote(false);
+  await syncWithGithub(false);
   $('directionBtn').textContent = direction === 'de-en' ? 'DE → EN' : 'EN → DE';
   updateStats();
   buildDeck();
