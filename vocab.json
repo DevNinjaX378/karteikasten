@@ -1961,5 +1961,31 @@
     "date": "2026-06-25",
     "review": false,
     "gender": null
+  },
+  {
+    "id": 151,
+    "german": "der Befürworter",
+    "plural": null,
+    "english": "proponent, advocate",
+    "category": "Noun",
+    "type_raw": "noun (masc.)",
+    "example": "Das Rahmenwerk wurde von seinen Befürwortern als bahnbrechend bezeichnet.",
+    "notes": "N-declension trap: Befürworter is NOT n-declension — no umlaut, zero plural; Gen. sg. des Befürworters",
+    "date": "2026-06-25",
+    "review": false,
+    "gender": "der"
+  },
+  {
+    "id": 152,
+    "german": "der Aufsatz",
+    "plural": "-̈e",
+    "english": "academic paper, essay",
+    "category": "Noun",
+    "type_raw": "noun (masc.)",
+    "example": "Der Aufsatz wurde vor der Veröffentlichung von drei Gutachtern geprüft.",
+    "notes": "≠ die Studie (the study itself); ≠ der Bericht (report); ≠ die Abhandlung (treatise — longer/more formal)",
+    "date": "2026-06-25",
+    "review": false,
+    "gender": "der"
   }
 ]
