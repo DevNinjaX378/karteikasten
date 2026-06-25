@@ -394,6 +394,30 @@ function migrateProgress(){
   if(changed) saveProgress();
 }
 
+// Ensures every vocab ID has an explicit entry in progress (defaulting to
+// 0) — so the file always has a record per word, not just for words that
+// happen to have been tapped at least once. Runs against the currently
+// loaded VOCAB array, so it naturally picks up new words the next time
+// the page loads after vocab.json grows.
+function reconcileProgressWithVocab(){
+  let added = 0;
+  VOCAB.forEach(v=>{
+    if(typeof progress[v.id] !== 'number'){
+      progress[v.id] = 0;
+      added++;
+    }
+  });
+  return added;
+}
+
+// Counts vocab IDs that exist locally/in VOCAB but aren't represented at
+// all in the remote progress.json — used to trigger a structural push
+// even when there's no real study-progress difference to send up.
+function countMissingFromRemote(remoteData){
+  const remoteProgress = (remoteData && typeof remoteData.progress === 'object') ? remoteData.progress : {};
+  return VOCAB.filter(v => !(String(v.id) in remoteProgress)).length;
+}
+
 async function saveProgress(){
   try{ await window.storage.set('karteikasten-progress', JSON.stringify(progress)); }
   catch(e){ /* not available in this context */ }
@@ -443,6 +467,7 @@ function driveLoadFile(file){
       if(!data || typeof data.progress !== 'object') throw new Error('invalid');
       progress = data.progress;
       migrateProgress();
+      reconcileProgressWithVocab();
       if(data.direction === 'en-de' || data.direction === 'de-en'){
         direction = data.direction;
         $('directionBtn').textContent = direction === 'de-en' ? 'DE → EN' : 'EN → DE';
@@ -585,7 +610,8 @@ async function syncWithGithub(manual){
   }
 
   const pulled = mergeRemoteProgress(remote.data);
-  if(pulled > 0){
+  const filled = reconcileProgressWithVocab();
+  if(pulled > 0 || filled > 0){
     saveProgress();
     updateStats();
     buildDeck();
@@ -593,8 +619,14 @@ async function syncWithGithub(manual){
     if(browsing) renderCatalog();
   }
 
-  if(!localAheadOfRemote(remote.data)){
-    if(manual) showToast(pulled > 0 ? `${pulled} Karte(n) übernommen ✓` : 'Bereits aktuell ✓');
+  const missingRemote = countMissingFromRemote(remote.data);
+  const needsPush = localAheadOfRemote(remote.data) || missingRemote > 0;
+
+  if(!needsPush){
+    if(manual){
+      const changed = pulled + filled;
+      showToast(changed > 0 ? `${changed} Karte(n) aktualisiert ✓` : 'Bereits aktuell ✓');
+    }
     return;
   }
 
@@ -602,8 +634,8 @@ async function syncWithGithub(manual){
   if(!token){
     if(manual){
       showToast(
-        pulled > 0
-          ? `${pulled} übernommen — kein Token gesetzt, eigener Fortschritt nicht hochgeladen`
+        (pulled > 0 || filled > 0)
+          ? `${pulled + filled} übernommen — kein Token gesetzt, eigener Fortschritt nicht hochgeladen`
           : 'Eigener Fortschritt ist neuer, aber kein GitHub-Token gesetzt (🔑 Token)',
         true
       );
@@ -613,9 +645,12 @@ async function syncWithGithub(manual){
 
   try{
     const payload = { progress, direction, savedAt: new Date().toISOString() };
-    await githubPutProgressFile(payload, remote.sha, 'Karteikasten: Fortschritt synchronisiert');
+    const msg = missingRemote > 0
+      ? `Karteikasten: Fortschritt synchronisiert (+${missingRemote} neue Einträge ergänzt)`
+      : 'Karteikasten: Fortschritt synchronisiert';
+    await githubPutProgressFile(payload, remote.sha, msg);
     if(manual){
-      showToast(pulled > 0 ? `${pulled} übernommen, eigener Fortschritt hochgeladen ✓` : 'Fortschritt hochgeladen ✓');
+      showToast((pulled > 0 || filled > 0) ? `${pulled + filled} übernommen, hochgeladen ✓` : 'Fortschritt hochgeladen ✓');
     }
   }catch(e){
     if(manual) showToast('Hochladen fehlgeschlagen — Token prüfen.', true);
@@ -856,6 +891,7 @@ document.addEventListener('keydown', (e)=>{
 async function init(){
   VOCAB = await fetch('vocab.json').then(r => r.json());
   await loadProgress();
+  if(reconcileProgressWithVocab() > 0) saveProgress();
   await syncWithGithub(false);
   $('directionBtn').textContent = direction === 'de-en' ? 'DE → EN' : 'EN → DE';
   updateStats();
