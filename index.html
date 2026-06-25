@@ -11,354 +11,350 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg-0:#0E2026;
-    --bg-1:#163945;
-    --bg-2:#1E4A58;
-    --paper:#F2EAD3;
-    --paper-edge:#DCC9A0;
-    --paper-shadow:#08151A;
-    --ink:#2B2118;
-    --ink-soft:#6B5D49;
-    --gold:#C9A227;
-    --red:#A33A2C;
-    --green:#3F6B4A;
-    --der:#3D6EA8;
-    --die:#A33A2C;
-    --das:#4C7A52;
-    --paper-text-dim:#9CB8BD;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(ellipse at 30% -10%, var(--bg-2), transparent 60%),
-      var(--bg-0);
-    color:var(--paper-text-dim);
-    font-family:'Courier Prime', monospace;
-    min-height:100vh;
-    padding:calc(28px + env(safe-area-inset-top)) 16px calc(60px + env(safe-area-inset-bottom));
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-  .wrap{width:100%;max-width:620px;}
+:root{
+  --bg-0:#0E2026;
+  --bg-1:#163945;
+  --bg-2:#1E4A58;
+  --paper:#F2EAD3;
+  --paper-edge:#DCC9A0;
+  --paper-shadow:#08151A;
+  --ink:#2B2118;
+  --ink-soft:#6B5D49;
+  --gold:#C9A227;
+  --red:#A33A2C;
+  --green:#3F6B4A;
+  --der:#3D6EA8;
+  --die:#A33A2C;
+  --das:#4C7A52;
+  --paper-text-dim:#9CB8BD;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(ellipse at 30% -10%, var(--bg-2), transparent 60%),
+    var(--bg-0);
+  color:var(--paper-text-dim);
+  font-family:'Courier Prime', monospace;
+  min-height:100vh;
+  padding:calc(28px + env(safe-area-inset-top)) 16px calc(60px + env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.wrap{width:100%;max-width:620px;}
 
-  /* ---------- header ---------- */
-  header{margin-bottom:18px;}
-  .eyebrow{
-    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--gold);opacity:.85;margin-bottom:4px;
-  }
-  h1{
-    font-family:'Fraunces', serif;
-    font-weight:700;
-    font-size:clamp(28px,6vw,38px);
-    color:var(--paper);
-    margin:0 0 4px;
-    letter-spacing:-.01em;
-  }
-  .sub{font-size:13px;color:var(--paper-text-dim);}
-  .sub b{color:var(--paper);font-weight:700;}
+/* ---------- header ---------- */
+header{margin-bottom:18px;}
+.eyebrow{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);opacity:.85;margin-bottom:4px;
+}
+h1{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:clamp(28px,6vw,38px);
+  color:var(--paper);
+  margin:0 0 4px;
+  letter-spacing:-.01em;
+}
+.sub{font-size:13px;color:var(--paper-text-dim);}
+.sub b{color:var(--paper);font-weight:700;}
 
-  /* ---------- stats strip ---------- */
-  .stats{
-    display:flex;gap:14px;margin:14px 0 16px;flex-wrap:wrap;
-    font-size:12px;
-  }
-  .stat{
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:3px;padding:6px 10px;
-    display:flex;align-items:center;gap:6px;
-  }
-  .stat .dot{width:7px;height:7px;border-radius:50%;flex:none;}
-  .stat .n{color:var(--paper);font-weight:700;}
+/* ---------- stats strip ---------- */
+.stats{
+  display:flex;gap:14px;margin:14px 0 16px;flex-wrap:wrap;
+  font-size:12px;
+}
+.stat{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:3px;padding:6px 10px;
+  display:flex;align-items:center;gap:6px;
+}
+.stat .dot{width:7px;height:7px;border-radius:50%;flex:none;}
+.stat .n{color:var(--paper);font-weight:700;}
 
-  /* ---------- controls ---------- */
-  .cat-row{
-    display:flex;gap:8px;
-    overflow-x:auto;-webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-    padding:2px 0 8px;
-    margin-bottom:2px;
-  }
-  .cat-row::-webkit-scrollbar{display:none;}
-  .cat-row .chip{flex:none;white-space:nowrap;}
-  .controls{
-    display:flex;flex-wrap:wrap;gap:8px;align-items:center;
-    margin-bottom:18px;
-  }
-  .chip{
-    font-family:'Courier Prime',monospace;
-    font-size:12px;
-    background:transparent;
-    border:1px solid rgba(255,255,255,.22);
-    color:var(--paper-text-dim);
-    padding:8px 14px;border-radius:20px;cursor:pointer;
-    transition:.15s;
-    user-select:none;
-    min-height:36px;
-  }
-  .chip:hover{border-color:var(--gold);color:var(--paper);}
-  .chip.active{background:var(--gold);border-color:var(--gold);color:#1a1406;font-weight:700;}
-  .chip.flag.active{background:var(--red);border-color:var(--red);color:#fff;}
-  .spacer{flex:1;}
-  .iconbtn{
-    background:transparent;border:1px solid rgba(255,255,255,.22);
-    color:var(--paper-text-dim);border-radius:20px;
-    width:38px;height:38px;cursor:pointer;font-size:15px;
-    display:flex;align-items:center;justify-content:center;
-    transition:.15s;
-  }
-  .iconbtn:hover{border-color:var(--gold);color:var(--paper);}
+/* ---------- controls ---------- */
+.cat-row{
+  display:flex;gap:8px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:2px 0 8px;
+  margin-bottom:2px;
+}
+.cat-row::-webkit-scrollbar{display:none;}
+.cat-row .chip{flex:none;white-space:nowrap;}
+.controls{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  margin-bottom:18px;
+}
+.chip{
+  font-family:'Courier Prime',monospace;
+  font-size:12px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.22);
+  color:var(--paper-text-dim);
+  padding:8px 14px;border-radius:20px;cursor:pointer;
+  transition:.15s;
+  user-select:none;
+  min-height:36px;
+}
+.chip:hover{border-color:var(--gold);color:var(--paper);}
+.chip.active{background:var(--gold);border-color:var(--gold);color:#1a1406;font-weight:700;}
+.chip.flag.active{background:var(--red);border-color:var(--red);color:#fff;}
+.spacer{flex:1;}
+.iconbtn{
+  background:transparent;border:1px solid rgba(255,255,255,.22);
+  color:var(--paper-text-dim);border-radius:20px;
+  width:38px;height:38px;cursor:pointer;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  transition:.15s;
+}
+.iconbtn:hover{border-color:var(--gold);color:var(--paper);}
+.toast{
+  position:fixed;bottom:22px;left:50%;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--paper);color:var(--ink);
+  padding:10px 18px;border-radius:6px;font-size:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,.45);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s, transform .25s;
+  max-width:85vw;text-align:center;z-index:50;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.error{background:var(--red);color:#fff;}
 
-  .toast{
-    position:fixed;bottom:22px;left:50%;
-    transform:translateX(-50%) translateY(16px);
-    background:var(--paper);color:var(--ink);
-    padding:10px 18px;border-radius:6px;font-size:12px;
-    box-shadow:0 8px 22px rgba(0,0,0,.45);
-    opacity:0;pointer-events:none;
-    transition:opacity .25s, transform .25s;
-    max-width:85vw;text-align:center;z-index:50;
-  }
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-  .toast.error{background:var(--red);color:#fff;}
+/* ---------- card stage ---------- */
+.stage{
+  position:relative;
+  height:340px;
+  margin-bottom:18px;
+  perspective:1400px;
+}
+.stack-deco{
+  position:absolute;inset:0;
+  border-radius:4px;
+  background:var(--paper-edge);
+  box-shadow:0 10px 24px var(--paper-shadow);
+}
+.stack-deco.d1{transform:rotate(-4deg) translateY(6px);opacity:.55;}
+.stack-deco.d2{transform:rotate(3deg) translateY(10px);opacity:.35;}
+.card-3d{
+  position:absolute;inset:0;
+  cursor:pointer;
+  transform-style:preserve-3d;
+  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.card-3d.flipped{transform:rotateY(180deg);}
+.face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;
+  border-radius:4px;
+  background:var(--paper);
+  color:var(--ink);
+  box-shadow:0 14px 30px var(--paper-shadow), inset 0 0 0 1px rgba(0,0,0,.06);
+  padding:26px 26px 20px;
+  display:flex;flex-direction:column;
+}
+.face.back{transform:rotateY(180deg);}
+/* ring holes like an index card */
+.holes{position:absolute;top:14px;left:14px;display:flex;flex-direction:column;gap:8px;}
+.holes span{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--bg-0);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.5);
+}
+/* gender / category tab on right edge */
+.tab{
+  position:absolute;top:30px;right:-1px;
+  width:8px;height:64px;border-radius:3px 0 0 3px;
+}
+.review-flag{
+  position:absolute;top:-1px;right:18px;
+  background:var(--red);color:#fff;
+  font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 8px;border-radius:0 0 4px 4px;
+  box-shadow:0 2px 4px rgba(0,0,0,.3);
+}
+.stamp{
+  position:absolute;bottom:14px;right:16px;
+  font-size:10px;color:var(--ink-soft);
+  border:1px solid var(--ink-soft);
+  padding:2px 6px;border-radius:2px;
+  transform:rotate(-3deg);
+  opacity:.55;letter-spacing:.03em;
+}
+.term-row{display:flex;align-items:baseline;gap:8px;margin:38px 0 6px 28px;flex-wrap:wrap;}
+.article{font-weight:700;font-size:18px;}
+.article.der{color:var(--der);}
+.article.die{color:var(--die);}
+.article.das{color:var(--das);}
+.term{
+  font-size:clamp(20px,5.4vw,27px);
+  font-weight:700;
+  line-height:1.15;
+}
+.plural{font-size:13px;color:var(--ink-soft);margin-left:28px;}
+.typetag{
+  margin:10px 28px 0 28px;
+  font-size:11px;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--ink-soft);
+}
+.hint{
+  margin:6px 28px 0;font-size:11px;color:var(--ink-soft);opacity:.7;
+}
+.content-flex{flex:1 1 auto;}
+.english{
+  font-family:'Fraunces',serif;
+  font-size:clamp(19px,4.6vw,23px);
+  font-weight:600;
+  margin:38px 0 6px 28px;
+  line-height:1.25;
+}
+.example{
+  margin:12px 28px 10px;
+  font-style:italic;
+  font-size:14px;
+  line-height:1.5;
+  color:var(--ink);
+  border-left:2px solid var(--gold);
+  padding-left:10px;
+}
+.notes{
+  margin:0 28px;
+  font-size:12px;
+  color:var(--ink-soft);
+  line-height:1.5;
+}
 
-  /* ---------- card stage ---------- */
-  .stage{
-    position:relative;
-    height:340px;
-    margin-bottom:18px;
-    perspective:1400px;
-  }
-  .stack-deco{
-    position:absolute;inset:0;
-    border-radius:4px;
-    background:var(--paper-edge);
-    box-shadow:0 10px 24px var(--paper-shadow);
-  }
-  .stack-deco.d1{transform:rotate(-4deg) translateY(6px);opacity:.55;}
-  .stack-deco.d2{transform:rotate(3deg) translateY(10px);opacity:.35;}
+/* ---------- action buttons ---------- */
+.actions{display:flex;gap:10px;margin-bottom:28px;}
+.actbtn{
+  flex:1;
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:15px;
+  padding:14px 0;
+  border-radius:4px;
+  border:none;
+  cursor:pointer;
+  transition:.15s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.actbtn.again{background:rgba(163,58,44,.18);color:#E7A99A;border:1px solid var(--red);}
+.actbtn.again:hover{background:var(--red);color:#fff;}
+.actbtn.ok{background:rgba(201,162,39,.18);color:#E8CB7E;border:1px solid var(--gold);}
+.actbtn.ok:hover{background:var(--gold);color:#1a1406;}
+.actbtn.got{background:rgba(63,107,74,.2);color:#A9D3B4;border:1px solid var(--green);}
+.actbtn.got:hover{background:var(--green);color:#fff;}
+.actbtn small{font-family:'Courier Prime',monospace;font-size:10px;opacity:.7;}
 
-  .card-3d{
-    position:absolute;inset:0;
-    cursor:pointer;
-    transform-style:preserve-3d;
-    transition:transform .5s cubic-bezier(.2,.8,.2,1);
-  }
-  .card-3d.flipped{transform:rotateY(180deg);}
-  .face{
-    position:absolute;inset:0;
-    backface-visibility:hidden;
-    border-radius:4px;
-    background:var(--paper);
-    color:var(--ink);
-    box-shadow:0 14px 30px var(--paper-shadow), inset 0 0 0 1px rgba(0,0,0,.06);
-    padding:26px 26px 20px;
-    display:flex;flex-direction:column;
-  }
-  .face.back{transform:rotateY(180deg);}
-
-  /* ring holes like an index card */
-  .holes{position:absolute;top:14px;left:14px;display:flex;flex-direction:column;gap:8px;}
-  .holes span{
-    width:9px;height:9px;border-radius:50%;
-    background:var(--bg-0);
-    box-shadow:inset 0 1px 2px rgba(0,0,0,.5);
-  }
-
-  /* gender / category tab on right edge */
-  .tab{
-    position:absolute;top:30px;right:-1px;
-    width:8px;height:64px;border-radius:3px 0 0 3px;
-  }
-  .review-flag{
-    position:absolute;top:-1px;right:18px;
-    background:var(--red);color:#fff;
-    font-size:9px;letter-spacing:.08em;text-transform:uppercase;
-    padding:3px 8px;border-radius:0 0 4px 4px;
-    box-shadow:0 2px 4px rgba(0,0,0,.3);
-  }
-
-  .stamp{
-    position:absolute;bottom:14px;right:16px;
-    font-size:10px;color:var(--ink-soft);
-    border:1px solid var(--ink-soft);
-    padding:2px 6px;border-radius:2px;
-    transform:rotate(-3deg);
-    opacity:.55;letter-spacing:.03em;
-  }
-
-  .term-row{display:flex;align-items:baseline;gap:8px;margin:38px 0 6px 28px;flex-wrap:wrap;}
-  .article{font-weight:700;font-size:18px;}
-  .article.der{color:var(--der);}
-  .article.die{color:var(--die);}
-  .article.das{color:var(--das);}
-  .term{
-    font-size:clamp(20px,5.4vw,27px);
-    font-weight:700;
-    line-height:1.15;
-  }
-  .plural{font-size:13px;color:var(--ink-soft);margin-left:28px;}
-  .typetag{
-    margin:10px 28px 0 28px;
-    font-size:11px;text-transform:uppercase;letter-spacing:.1em;
-    color:var(--ink-soft);
-  }
-  .hint{
-    margin:6px 28px 0;font-size:11px;color:var(--ink-soft);opacity:.7;
-  }
-  .content-flex{flex:1 1 auto;}
-
-  .english{
-    font-family:'Fraunces',serif;
-    font-size:clamp(19px,4.6vw,23px);
-    font-weight:600;
-    margin:38px 0 6px 28px;
-    line-height:1.25;
-  }
-  .example{
-    margin:12px 28px 10px;
-    font-style:italic;
-    font-size:14px;
-    line-height:1.5;
-    color:var(--ink);
-    border-left:2px solid var(--gold);
-    padding-left:10px;
-  }
-  .notes{
-    margin:0 28px;
-    font-size:12px;
-    color:var(--ink-soft);
-    line-height:1.5;
-  }
-
-  /* ---------- action buttons ---------- */
-  .actions{display:flex;gap:12px;margin-bottom:28px;}
-  .actbtn{
-    flex:1;
-    font-family:'Fraunces',serif;
-    font-weight:600;
-    font-size:16px;
-    padding:14px 0;
-    border-radius:4px;
-    border:none;
-    cursor:pointer;
-    transition:.15s;
-    display:flex;align-items:center;justify-content:center;gap:8px;
-  }
-  .actbtn.again{background:rgba(163,58,44,.18);color:#E7A99A;border:1px solid var(--red);}
-  .actbtn.again:hover{background:var(--red);color:#fff;}
-  .actbtn.got{background:rgba(63,107,74,.2);color:#A9D3B4;border:1px solid var(--green);}
-  .actbtn.got:hover{background:var(--green);color:#fff;}
-  .actbtn small{font-family:'Courier Prime',monospace;font-size:10px;opacity:.7;}
-
-  /* ---------- browse / catalog ---------- */
-  .catalog{display:none;}
-  .catalog.show{display:block;}
-  .stage.hide, .actions.hide{display:none;}
-  .searchbar{
-    width:100%;padding:10px 14px;border-radius:4px;margin-bottom:14px;
-    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.18);
-    color:var(--paper);font-family:'Courier Prime',monospace;font-size:13px;
-  }
-  .searchbar::placeholder{color:var(--paper-text-dim);}
-  .row{
-    display:flex;align-items:baseline;gap:10px;
-    padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08);
-    cursor:pointer;
-  }
-  .row:hover{background:rgba(255,255,255,.04);}
-  .row .g{width:14px;font-weight:700;font-size:13px;flex:none;}
-  .row .g.der{color:var(--der);}.row .g.die{color:var(--die);}.row .g.das{color:var(--das);}
-  .row .de{font-weight:700;color:var(--paper);font-size:13px;flex:none;min-width:150px;}
-  .row .en{font-size:12px;color:var(--paper-text-dim);flex:1;}
-  .row .flag{color:var(--red);font-size:11px;flex:none;}
-  .row .known{color:var(--green);font-size:11px;flex:none;}
-  .empty{text-align:center;padding:30px 0;color:var(--paper-text-dim);font-size:13px;}
-
-  footer{margin-top:20px;text-align:center;font-size:11px;color:var(--paper-text-dim);opacity:.5;}
-
-  @media (prefers-reduced-motion: reduce){
-    .card-3d{transition:none;}
-  }
-
-  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+/* ---------- browse / catalog ---------- */
+.catalog{display:none;}
+.catalog.show{display:block;}
+.stage.hide, .actions.hide{display:none;}
+.searchbar{
+  width:100%;padding:10px 14px;border-radius:4px;margin-bottom:14px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.18);
+  color:var(--paper);font-family:'Courier Prime',monospace;font-size:13px;
+}
+.searchbar::placeholder{color:var(--paper-text-dim);}
+.row{
+  display:flex;align-items:baseline;gap:10px;
+  padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08);
+  cursor:pointer;
+}
+.row:hover{background:rgba(255,255,255,.04);}
+.row .g{width:14px;font-weight:700;font-size:13px;flex:none;}
+.row .g.der{color:var(--der);}.row .g.die{color:var(--die);}.row .g.das{color:var(--das);}
+.row .de{font-weight:700;color:var(--paper);font-size:13px;flex:none;min-width:150px;}
+.row .en{font-size:12px;color:var(--paper-text-dim);flex:1;}
+.row .flag{color:var(--red);font-size:11px;flex:none;}
+.row .known{color:var(--green);font-size:11px;flex:none;}
+.row .cnt{color:var(--gold);font-size:11px;flex:none;min-width:16px;text-align:right;opacity:.85;}
+.empty{text-align:center;padding:30px 0;color:var(--paper-text-dim);font-size:13px;}
+footer{margin-top:20px;text-align:center;font-size:11px;color:var(--paper-text-dim);opacity:.5;}
+@media (prefers-reduced-motion: reduce){
+  .card-3d{transition:none;}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div class="eyebrow">Dein Vokabelstapel</div>
-    <h1>Karteikasten</h1>
-    <div class="sub"><span id="deckLabel"><b>135</b> Karten</span> · <span id="dueLabel">0 zur Wiederholung markiert</span></div>
-  </header>
+<header>
+<div class="eyebrow">Dein Vokabelstapel</div>
+<h1>Karteikasten</h1>
+<div class="sub"><span id="deckLabel"><b>135</b> Karten</span> · <span id="dueLabel">0 zur Wiederholung markiert</span></div>
+</header>
 
-  <div class="stats">
-    <div class="stat"><span class="dot" style="background:var(--green)"></span>Sitzt: <span class="n" id="statKnown">0</span></div>
-    <div class="stat"><span class="dot" style="background:var(--red)"></span>Noch nicht: <span class="n" id="statLearning">0</span></div>
-    <div class="stat"><span class="dot" style="background:var(--gold)"></span>Neu: <span class="n" id="statNew">0</span></div>
-  </div>
+<div class="stats">
+<div class="stat"><span class="dot" style="background:var(--green)"></span>Sitzt: <span class="n" id="statKnown">0</span></div>
+<div class="stat"><span class="dot" style="background:var(--red)"></span>Noch nicht: <span class="n" id="statLearning">0</span></div>
+<div class="stat"><span class="dot" style="background:var(--gold)"></span>Neu: <span class="n" id="statNew">0</span></div>
+</div>
 
-  <div class="cat-row" id="filterChips">
-    <button class="chip active" data-cat="all">Alle</button>
-    <button class="chip" data-cat="Verb">Verben</button>
-    <button class="chip" data-cat="Noun">Nomen</button>
-    <button class="chip" data-cat="Adjective">Adjektive</button>
-    <button class="chip" data-cat="Expression">Ausdrücke</button>
-    <button class="chip" data-cat="Connector">Konnektoren</button>
-    <button class="chip" data-cat="Grammar">Grammatik</button>
-  </div>
+<div class="cat-row" id="filterChips">
+<button class="chip active" data-cat="all">Alle</button>
+<button class="chip" data-cat="Verb">Verben</button>
+<button class="chip" data-cat="Noun">Nomen</button>
+<button class="chip" data-cat="Adjective">Adjektive</button>
+<button class="chip" data-cat="Expression">Ausdrücke</button>
+<button class="chip" data-cat="Connector">Konnektoren</button>
+<button class="chip" data-cat="Grammar">Grammatik</button>
+</div>
 
-  <div class="controls">
-    <button class="chip flag" id="dueOnlyChip" title="Nur als 'wiederholen' markierte Karten">⚑ Fällig</button>
-    <button class="chip" id="directionBtn" title="Abfragerichtung wechseln">EN → DE</button>
-    <div class="spacer"></div>
-    <button class="iconbtn" id="shuffleBtn" title="Mischen">⇄</button>
-    <button class="iconbtn" id="browseBtn" title="Alle Karten durchsuchen">≣</button>
-    <button class="chip" id="driveSaveBtn" title="Sicherungsdatei speichern (für Learning German/Karteikasten)">⬇ Sichern</button>
-    <button class="chip" id="driveLoadBtn" title="Eine zuvor gespeicherte Sicherungsdatei laden">⬆ Laden</button>
-    <input type="file" id="importFile" accept="application/json" style="display:none;">
-  </div>
+<div class="controls">
+<button class="chip flag" id="dueOnlyChip" title="Nur als 'wiederholen' markierte Karten">⚑ Fällig</button>
+<button class="chip" id="directionBtn" title="Abfragerichtung wechseln">EN → DE</button>
+<div class="spacer"></div>
+<button class="iconbtn" id="shuffleBtn" title="Mischen">⇄</button>
+<button class="iconbtn" id="browseBtn" title="Alle Karten durchsuchen">≣</button>
+<button class="chip" id="driveSaveBtn" title="Sicherungsdatei speichern (für Learning German/Karteikasten)">⬇ Sichern</button>
+<button class="chip" id="driveLoadBtn" title="Eine zuvor gespeicherte Sicherungsdatei laden">⬆ Laden</button>
+<input type="file" id="importFile" accept="application/json" style="display:none;">
+</div>
 
-  <div class="stage" id="stage">
-    <div class="stack-deco d2"></div>
-    <div class="stack-deco d1"></div>
-    <div class="card-3d" id="card3d">
-      <div class="face front" id="faceFront"></div>
-      <div class="face back" id="faceBack"></div>
-    </div>
-  </div>
+<div class="stage" id="stage">
+<div class="stack-deco d2"></div>
+<div class="stack-deco d1"></div>
+<div class="card-3d" id="card3d">
+<div class="face front" id="faceFront"></div>
+<div class="face back" id="faceBack"></div>
+</div>
+</div>
 
-  <div class="actions" id="actions">
-    <button class="actbtn again" id="btnAgain">↺ Nochmal <small>(1)</small></button>
-    <button class="actbtn got" id="btnGot">✓ Sitzt! <small>(2)</small></button>
-  </div>
+<div class="actions" id="actions">
+<button class="actbtn again" id="btnAgain">↺ Nochmal <small>(1)</small></button>
+<button class="actbtn ok" id="btnOk">~ Passt <small>(2)</small></button>
+<button class="actbtn got" id="btnGot">✓ Sitzt! <small>(3)</small></button>
+</div>
 
-  <div class="catalog" id="catalog">
-    <input class="searchbar" id="searchInput" placeholder="Suchen — Deutsch oder Englisch…">
-    <div id="catalogList"></div>
-  </div>
+<div class="catalog" id="catalog">
+<input class="searchbar" id="searchInput" placeholder="Suchen — Deutsch oder Englisch…">
+<div id="catalogList"></div>
+</div>
 
-  <div class="toast" id="toast"></div>
+<div class="toast" id="toast"></div>
 
-  <footer>Quelle: „German Vocab" · Google Drive · ⬇⬆ sichern/laden über deinen Drive-Sync-Ordner</footer>
+<footer>Quelle: „German Vocab" · Google Drive · ⬇⬆ sichern/laden über deinen Drive-Sync-Ordner</footer>
 </div>
 
 <script>
 let VOCAB = [];
-
-let progress = {};          // id -> 'known' | 'learning'
+let progress = {}; // id -> integer mastery counter (0 = never practiced / reset to struggling)
 let activeCat = 'all';
 let dueOnly = false;
-let direction = 'en-de';     // 'de-en' = German shown first, 'en-de' = English shown first — always starts here
-let deck = [];               // array of vocab objects, current study order
+let direction = 'en-de'; // 'de-en' = German shown first, 'en-de' = English shown first — always starts here
+let deck = []; // array of vocab objects, current study order
 let pos = 0;
 let flipped = false;
 let browsing = false;
-let sessionKnown = 0, sessionLearning = 0;
+let sessionAgain = 0, sessionOk = 0, sessionGood = 0;
+
+// A card counts as "known/Sitzt" once its counter reaches this.
+const MASTERY_THRESHOLD = 5;
 
 const $ = id => document.getElementById(id);
 
@@ -372,13 +368,30 @@ async function saveDirection(){
 async function loadProgress(){
   try{
     const res = await window.storage.get('karteikasten-progress');
-    if(res && res.value){ progress = JSON.parse(res.value); return; }
+    if(res && res.value){ progress = JSON.parse(res.value); }
   }catch(e){ /* window.storage unavailable — fall back below */ }
-  try{
-    const raw = localStorage.getItem('karteikasten-progress');
-    if(raw){ progress = JSON.parse(raw); }
-  }catch(e){ progress = {}; }
+  if(Object.keys(progress).length === 0){
+    try{
+      const raw = localStorage.getItem('karteikasten-progress');
+      if(raw){ progress = JSON.parse(raw); }
+    }catch(e){ progress = {}; }
+  }
+  migrateProgress();
 }
+
+// Older saves stored 'known' / 'learning' strings instead of a numeric
+// counter. Convert those once on load so existing progress isn't lost —
+// 'known' becomes an already-mastered counter, 'learning' starts at 0.
+function migrateProgress(){
+  let changed = false;
+  Object.keys(progress).forEach(id=>{
+    const v = progress[id];
+    if(v === 'known'){ progress[id] = MASTERY_THRESHOLD; changed = true; }
+    else if(v === 'learning'){ progress[id] = 0; changed = true; }
+  });
+  if(changed) saveProgress();
+}
+
 async function saveProgress(){
   try{ await window.storage.set('karteikasten-progress', JSON.stringify(progress)); }
   catch(e){ /* not available in this context */ }
@@ -386,7 +399,15 @@ async function saveProgress(){
   catch(e){ console.error('Speichern fehlgeschlagen', e); }
 }
 
-function statusOf(id){ return progress[id] || 'new'; }
+function countOf(id){
+  const v = progress[id];
+  return typeof v === 'number' ? v : 0;
+}
+
+function statusOf(id){
+  if(typeof progress[id] !== 'number') return 'new';
+  return progress[id] >= MASTERY_THRESHOLD ? 'known' : 'learning';
+}
 
 let toastTimer;
 function showToast(msg, isError){
@@ -419,6 +440,7 @@ function driveLoadFile(file){
       const data = JSON.parse(e.target.result);
       if(!data || typeof data.progress !== 'object') throw new Error('invalid');
       progress = data.progress;
+      migrateProgress();
       if(data.direction === 'en-de' || data.direction === 'de-en'){
         direction = data.direction;
         $('directionBtn').textContent = direction === 'de-en' ? 'DE → EN' : 'EN → DE';
@@ -438,15 +460,25 @@ function driveLoadFile(file){
   reader.readAsText(file);
 }
 
+// Weighted shuffle: cards with a lower mastery counter get a higher chance
+// of sorting earlier, so less-practiced (and never-seen) words come up more
+// often — but it's still randomized, not a strict queue, so the deck
+// doesn't feel mechanical or identical every time.
+function weightOf(card){
+  return 1 / (countOf(card.id) + 1);
+}
+
+function weightedShuffle(arr){
+  return arr
+    .map(item => ({ item, key: Math.pow(Math.random(), 1 / weightOf(item)) }))
+    .sort((a, b) => b.key - a.key)
+    .map(x => x.item);
+}
+
 function buildDeck(){
   let pool = VOCAB.filter(v => activeCat === 'all' || v.category === activeCat);
   if(dueOnly) pool = pool.filter(v => v.review || statusOf(v.id) === 'learning');
-  // shuffle
-  for(let i = pool.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
-  deck = pool;
+  deck = weightedShuffle(pool);
   pos = 0;
   flipped = false;
 }
@@ -469,7 +501,7 @@ function germanHead(c){
   const article = c.gender || '';
   const term = c.gender ? c.german.replace(/^(der|die|das)\s+/i,'') : c.german;
   return `<div class="term-row"><span class="article ${article}">${article}</span><span class="term">${term}</span></div>
-          ${c.plural ? `<div class="plural">Plural: ${c.plural}</div>` : ''}`;
+  ${c.plural ? `<div class="plural">Plural: ${c.plural}</div>` : ''}`;
 }
 
 function questionContent(c, lang){
@@ -502,19 +534,16 @@ function emptyFace(){
 function renderCard(){
   $('card3d').classList.remove('flipped');
   flipped = false;
-
   if(deck.length === 0){
     $('faceFront').innerHTML = emptyFace();
     $('faceBack').innerHTML = '';
     return;
   }
-
   const c = deck[pos];
   const frontLang = direction === 'de-en' ? 'de' : 'en';
-  const backLang  = direction === 'de-en' ? 'en' : 'de';
-
+  const backLang = direction === 'de-en' ? 'en' : 'de';
   $('faceFront').innerHTML = faceShell(c, questionContent(c, frontLang), { isDE: frontLang === 'de', showHint: true });
-  $('faceBack').innerHTML  = faceShell(c, answerContent(c, backLang),   { isDE: backLang === 'de',  showHint: false });
+  $('faceBack').innerHTML = faceShell(c, answerContent(c, backLang), { isDE: backLang === 'de', showHint: false });
 }
 
 function flip(){
@@ -523,15 +552,21 @@ function flip(){
   $('card3d').classList.toggle('flipped', flipped);
 }
 
-function advance(status){
+// action: 'again' (Nochmal), 'ok' (Passt), 'good' (Sitzt!)
+function advance(action){
   if(deck.length === 0) return;
   const c = deck[pos];
-  progress[c.id] = status;
-  if(status === 'known') sessionKnown++; else sessionLearning++;
+  const cur = countOf(c.id);
+  let next;
+  if(action === 'again'){ next = Math.max(0, cur - 2); sessionAgain++; }
+  else if(action === 'ok'){ next = cur + 1; sessionOk++; }
+  else { next = cur + 4; sessionGood++; } // 'good' — bigger jump for solidly-known cards
+
+  progress[c.id] = next;
   saveProgress();
   updateStats();
 
-  if(status === 'learning'){
+  if(action === 'again'){
     // requeue a few cards later in this session
     const card = deck[pos];
     deck.splice(pos, 1);
@@ -578,6 +613,7 @@ function renderCatalog(){
       <span class="en">${v.english}</span>
       ${v.review ? '<span class="flag">⚑</span>' : ''}
       ${statusOf(v.id)==='known' ? '<span class="known">✓</span>' : ''}
+      <span class="cnt">${countOf(v.id)}</span>
     </div>
   `).join('');
   list.querySelectorAll('.row').forEach(row=>{
@@ -606,8 +642,9 @@ function setBrowsing(on){
 }
 
 $('card3d').addEventListener('click', flip);
-$('btnAgain').addEventListener('click', ()=>advance('learning'));
-$('btnGot').addEventListener('click', ()=>advance('known'));
+$('btnAgain').addEventListener('click', ()=>advance('again'));
+$('btnOk').addEventListener('click', ()=>advance('ok'));
+$('btnGot').addEventListener('click', ()=>advance('good'));
 $('shuffleBtn').addEventListener('click', ()=>{ buildDeck(); renderCard(); });
 $('browseBtn').addEventListener('click', ()=> setBrowsing(!browsing));
 $('driveSaveBtn').addEventListener('click', driveSave);
@@ -629,12 +666,14 @@ $('filterChips').querySelectorAll('.chip[data-cat]').forEach(chip=>{
     if(browsing) renderCatalog();
   });
 });
+
 $('dueOnlyChip').addEventListener('click', ()=>{
   dueOnly = !dueOnly;
   $('dueOnlyChip').classList.toggle('active', dueOnly);
   buildDeck();
   renderCard();
 });
+
 $('directionBtn').addEventListener('click', ()=>{
   direction = direction === 'de-en' ? 'en-de' : 'de-en';
   $('directionBtn').textContent = direction === 'de-en' ? 'DE → EN' : 'EN → DE';
@@ -645,8 +684,9 @@ $('directionBtn').addEventListener('click', ()=>{
 document.addEventListener('keydown', (e)=>{
   if(browsing) return;
   if(e.code === 'Space'){ e.preventDefault(); flip(); }
-  else if(e.key === '1'){ advance('learning'); }
-  else if(e.key === '2'){ advance('known'); }
+  else if(e.key === '1'){ advance('again'); }
+  else if(e.key === '2'){ advance('ok'); }
+  else if(e.key === '3'){ advance('good'); }
 });
 
 async function init(){
@@ -658,6 +698,7 @@ async function init(){
   renderCard();
   $('deckLabel').innerHTML = `<b>${VOCAB.length}</b> Karten`;
 }
+
 init();
 </script>
 </body>
