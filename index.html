@@ -286,23 +286,13 @@ footer{margin-top:20px;text-align:center;font-size:11px;color:var(--paper-text-d
 <header>
 <div class="eyebrow">Dein Vokabelstapel</div>
 <h1>Karteikasten</h1>
-<div class="sub"><span id="deckLabel"><b>135</b> Karten</span> · <span id="dueLabel">0 zur Wiederholung markiert</span></div>
+<div class="sub"><span id="deckLabel"><b>135</b> Karten</span></div>
 </header>
 
 <div class="stats">
 <div class="stat"><span class="dot" style="background:var(--green)"></span>Sitzt: <span class="n" id="statKnown">0</span></div>
 <div class="stat"><span class="dot" style="background:var(--red)"></span>Noch nicht: <span class="n" id="statLearning">0</span></div>
 <div class="stat"><span class="dot" style="background:var(--gold)"></span>Neu: <span class="n" id="statNew">0</span></div>
-</div>
-
-<div class="cat-row" id="filterChips">
-<button class="chip active" data-cat="all">Alle</button>
-<button class="chip" data-cat="Verb">Verben</button>
-<button class="chip" data-cat="Noun">Nomen</button>
-<button class="chip" data-cat="Adjective">Adjektive</button>
-<button class="chip" data-cat="Expression">Ausdrücke</button>
-<button class="chip" data-cat="Connector">Konnektoren</button>
-<button class="chip" data-cat="Grammar">Grammatik</button>
 </div>
 
 <div class="controls">
@@ -346,7 +336,6 @@ footer{margin-top:20px;text-align:center;font-size:11px;color:var(--paper-text-d
 <script>
 let VOCAB = [];
 let progress = {}; // id -> integer mastery counter (0 = never practiced / reset to struggling)
-let activeCat = 'all';
 let dueOnly = false;
 let direction = 'en-de'; // 'de-en' = German shown first, 'en-de' = English shown first — always starts here
 let deck = []; // array of vocab objects, current study order
@@ -394,16 +383,17 @@ function migrateProgress(){
   if(changed) saveProgress();
 }
 
-// Ensures every vocab ID has an explicit entry in progress (defaulting to
-// 0) — so the file always has a record per word, not just for words that
-// happen to have been tapped at least once. Runs against the currently
-// loaded VOCAB array, so it naturally picks up new words the next time
-// the page loads after vocab.json grows.
+// Ensures every vocab ID has an explicit entry in progress — so the file
+// always has a record per word, not just ones that have been tapped.
+// Uses null (not 0!) for "never touched" — 0 is also what a word becomes
+// after a couple of Nochmal taps, so reusing it as the empty-state value
+// would make untouched words indistinguishable from touched-and-struggling
+// ones, breaking both the "Neu" stat and the unseen-word weighting below.
 function reconcileProgressWithVocab(){
   let added = 0;
   VOCAB.forEach(v=>{
-    if(typeof progress[v.id] !== 'number'){
-      progress[v.id] = 0;
+    if(!(v.id in progress)){
+      progress[v.id] = null;
       added++;
     }
   });
@@ -425,9 +415,13 @@ async function saveProgress(){
   catch(e){ console.error('Speichern fehlgeschlagen', e); }
 }
 
+// Returns -1 for "never touched" (null/missing) — deliberately lower than
+// any real count, so anything comparing counts (merge logic, weighting)
+// naturally treats untouched words as behind real progress, without
+// confusing them with a touched word that's been reduced to a real 0.
 function countOf(id){
   const v = progress[id];
-  return typeof v === 'number' ? v : 0;
+  return typeof v === 'number' ? v : -1;
 }
 
 function statusOf(id){
@@ -658,11 +652,16 @@ async function syncWithGithub(manual){
 }
 
 // Weighted shuffle: cards with a lower mastery counter get a higher chance
-// of sorting earlier, so less-practiced (and never-seen) words come up more
-// often — but it's still randomized, not a strict queue, so the deck
-// doesn't feel mechanical or identical every time.
+// of sorting earlier, so less-practiced words come up more often — but
+// it's still randomized, not a strict queue. Never-touched words (-1) get
+// a weight clearly above even a freshly-floored touched word (max 1 at
+// count=0), so they reliably surface ahead of "struggling" words instead
+// of blending in with them.
+const NEVER_SEEN_WEIGHT = 3;
 function weightOf(card){
-  return 1 / (countOf(card.id) + 1);
+  const c = countOf(card.id);
+  if(c < 0) return NEVER_SEEN_WEIGHT;
+  return 1 / (c + 1);
 }
 
 function weightedShuffle(arr){
@@ -673,7 +672,7 @@ function weightedShuffle(arr){
 }
 
 function buildDeck(){
-  let pool = VOCAB.filter(v => activeCat === 'all' || v.category === activeCat);
+  let pool = VOCAB.slice(); // categories removed — always study the full deck
   if(dueOnly) pool = pool.filter(v => v.review || statusOf(v.id) === 'learning');
   deck = weightedShuffle(pool);
   pos = 0;
@@ -753,7 +752,7 @@ function flip(){
 function advance(action){
   if(deck.length === 0) return;
   const c = deck[pos];
-  const cur = countOf(c.id);
+  const cur = Math.max(countOf(c.id), 0); // first-ever tap on a never-seen word starts deltas from 0
   let next;
   if(action === 'again'){ next = Math.max(0, cur - 2); sessionAgain++; }
   else if(action === 'ok'){ next = cur + 1; sessionOk++; }
@@ -778,23 +777,21 @@ function advance(action){
 }
 
 function updateStats(){
-  let known=0, learning=0, neu=0, due=0;
+  let known=0, learning=0, neu=0;
   VOCAB.forEach(v=>{
     const s = statusOf(v.id);
     if(s==='known') known++;
     else if(s==='learning') learning++;
     else neu++;
-    if(v.review) due++;
   });
   $('statKnown').textContent = known;
   $('statLearning').textContent = learning;
   $('statNew').textContent = neu;
-  $('dueLabel').textContent = due + ' zur Wiederholung markiert';
 }
 
 function renderCatalog(){
   const q = $('searchInput').value.trim().toLowerCase();
-  let pool = VOCAB.filter(v => activeCat === 'all' || v.category === activeCat);
+  let pool = VOCAB.slice(); // categories removed
   if(q){
     pool = pool.filter(v => v.german.toLowerCase().includes(q) || v.english.toLowerCase().includes(q));
   }
@@ -810,7 +807,7 @@ function renderCatalog(){
       <span class="en">${v.english}</span>
       ${v.review ? '<span class="flag">⚑</span>' : ''}
       ${statusOf(v.id)==='known' ? '<span class="known">✓</span>' : ''}
-      <span class="cnt">${countOf(v.id)}</span>
+      <span class="cnt">${countOf(v.id) < 0 ? '–' : countOf(v.id)}</span>
     </div>
   `).join('');
   list.querySelectorAll('.row').forEach(row=>{
@@ -854,17 +851,6 @@ $('importFile').addEventListener('change', (e)=>{
   e.target.value = '';
 });
 $('searchInput').addEventListener('input', renderCatalog);
-
-$('filterChips').querySelectorAll('.chip[data-cat]').forEach(chip=>{
-  chip.addEventListener('click', ()=>{
-    $('filterChips').querySelectorAll('.chip[data-cat]').forEach(c=>c.classList.remove('active'));
-    chip.classList.add('active');
-    activeCat = chip.dataset.cat;
-    buildDeck();
-    renderCard();
-    if(browsing) renderCatalog();
-  });
-});
 
 $('dueOnlyChip').addEventListener('click', ()=>{
   dueOnly = !dueOnly;
