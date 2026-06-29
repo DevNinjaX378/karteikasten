@@ -2143,5 +2143,18 @@
     "date": "2026-06-26",
     "review": false,
     "gender": null
+  },
+  {
+    "id": 165,
+    "german": "vorenthalten",
+    "plural": null,
+    "english": "to withhold sth. from sb.",
+    "category": "Verb",
+    "type_raw": "verb",
+    "example": "Der Kommission wurden entscheidende Beweise vorenthalten.",
+    "notes": "vorenthielt · hat vorenthalten; jdm. etw. vorenthalten (Dativ for person); ≠ zurückhalten (no recipient/wrongful sense)",
+    "date": "2026-06-29",
+    "review": false,
+    "gender": null
   }
 ]
