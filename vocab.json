@@ -2156,5 +2156,83 @@
     "date": "2026-06-29",
     "review": false,
     "gender": null
+  },
+  {
+    "id": 166,
+    "german": "genauso gut wie",
+    "plural": null,
+    "english": "just as well as (someone)",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "Du weißt das doch genauso gut wie ich.",
+    "notes": "≠ so wie ich (loses the \"equally well\" sense); pairs naturally with doch",
+    "date": "2026-06-30",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 167,
+    "german": "das muss ich ihr lassen",
+    "plural": null,
+    "english": "I'll give her that / credit where it's due",
+    "category": "Noun",
+    "type_raw": "expression",
+    "example": "Sie erzielt Ergebnisse — das muss ich ihr lassen.",
+    "notes": "≠ das gebe ich ihr zu (zugeben has no recipient in modern usage); possessive adjusts: dir/ihm/ihr lassen",
+    "date": "2026-06-30",
+    "review": false,
+    "gender": "das"
+  },
+  {
+    "id": 168,
+    "german": "im Großen und Ganzen",
+    "plural": null,
+    "english": "by and large, on the whole",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "Im Großen und Ganzen war die Reform erfolgreich.",
+    "notes": "Capital G and G (nominalised adjectives); same pattern: im Allgemeinen, im Wesentlichen, im Nachhinein",
+    "date": "2026-06-30",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 169,
+    "german": "zugegeben / zugegebenermaßen",
+    "plural": null,
+    "english": "admittedly",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "Zugegeben, das war nicht ideal.",
+    "notes": "≠ zwar (needs aber); ≠ tatsächlich (no concessive meaning); zugegebenermaßen = formal variant",
+    "date": "2026-06-30",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 170,
+    "german": "alles andere als",
+    "plural": null,
+    "english": "anything but, far from",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "Das war alles andere als einfach.",
+    "notes": "Stronger than nicht besonders or nicht gerade",
+    "date": "2026-06-30",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 171,
+    "german": "die Art von [Dativ noun], der/die…",
+    "plural": null,
+    "english": "the kind of [person/thing] who/that…",
+    "category": "Noun",
+    "type_raw": "expression",
+    "example": "Er ist die Art von Kollegen, der immer die Schuld auf andere schiebt.",
+    "notes": "≠ ein Beispiel eines Kollegen (catalogue-entry feel); relative pronoun agrees with head noun, not with Art",
+    "date": "2026-06-30",
+    "review": false,
+    "gender": "die"
   }
 ]
