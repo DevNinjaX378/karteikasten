@@ -984,7 +984,7 @@
     "example": "Ihr wurde das Ausmaß bewusst.",
     "notes": "Two constructions; ≠ offensichtlich werden; bare \"bewusst werden\" ≠ enough",
     "date": "2026-06-17",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -997,7 +997,7 @@
     "example": "Das ist eine bodenlose Unterstellung.",
     "notes": "≠ Andeutung (neutral hint); ≠ Behauptung (neutral claim); unterstellen = to insinuate",
     "date": "2026-06-18",
-    "review": true,
+    "review": false,
     "gender": "die"
   },
   {
@@ -1010,7 +1010,7 @@
     "example": "Seine Forschung war maßgeblich für die Entwicklung des Feldes.",
     "notes": "≠ wesentlich (essential); ≠ entscheidend (outcome-decisive); also: federführend, wegweisend",
     "date": "2026-06-18",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1062,7 +1062,7 @@
     "example": "Der Zeuge konnte ihn vollständig entlasten.",
     "notes": "≠ freisprechen (judicial acquittal)",
     "date": "2026-06-17",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1075,7 +1075,7 @@
     "example": "Das Gericht sprach sie von allen Vorwürfen frei.",
     "notes": "≠ entlasten (general; no verdict needed)",
     "date": "2026-06-17",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1088,7 +1088,7 @@
     "example": "Er wog die Vor- und Nachteile ab.",
     "notes": "≠ abwiegen (physical weighing — same past forms, different meaning)",
     "date": "2026-06-17",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1101,7 +1101,7 @@
     "example": "Die demokratische Rechenschaftspflicht muss gestärkt werden.",
     "notes": "≠ Rechenschaft (fixed phrases only: ablegen, zur R. ziehen)",
     "date": "2026-06-17",
-    "review": true,
+    "review": false,
     "gender": "die"
   },
   {
@@ -1218,7 +1218,7 @@
     "example": "Sie hat sich damit abgefunden, dass sie die Stelle nicht bekommt.",
     "notes": "≠ verarbeiten (process trauma); ≠ akzeptieren (neutral); fand sich ab / abgefunden",
     "date": "2026-06-19",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1231,7 +1231,7 @@
     "example": "Er schiebt alles auf, was unangenehm ist.",
     "notes": "≠ hinausschieben (one-time postponement); schob auf / aufgeschoben",
     "date": "2026-06-19",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1244,7 +1244,7 @@
     "example": "Sie hat eine bemerkenswerte Resilienz entwickelt.",
     "notes": "≠ Willensstärke (willpower); ≠ Belastbarkeit (stress tolerance, HR)",
     "date": "2026-06-19",
-    "review": true,
+    "review": false,
     "gender": "die"
   },
   {
@@ -1257,7 +1257,7 @@
     "example": "Sei auf der Hut vor solchen Versprechungen.",
     "notes": "vor + Dat.; ≠ wachsam sein (broader vigilance)",
     "date": "2026-06-19",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1530,7 +1530,7 @@
     "example": "Er hat sich die Grammatik im Selbststudium angeeignet.",
     "notes": "eignete sich an · hat sich angeeignet; ≠ erwerben (neutral). Got wrong in Section B.",
     "date": "2026-06-21",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1556,7 +1556,7 @@
     "example": "Wer wochenlang fehlt, verliert schnell den Anschluss.",
     "notes": "≠ abrutschen (narrower — grades decline). Got wrong in Section B.",
     "date": "2026-06-21",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1595,7 +1595,7 @@
     "example": "Gute Lehrer vermitteln nicht nur Wissen, sondern auch Neugier.",
     "notes": "vermittelte · hat vermittelt; same verb as \"mediate\" sense. Got wrong in Section B.",
     "date": "2026-06-21",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1621,7 +1621,7 @@
     "example": "Nach stundenlangen Verhandlungen lenkte die Regierung schließlich ein.",
     "notes": null,
     "date": "2026-06-22",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -1790,7 +1790,7 @@
     "example": "Sei auf der Hut!",
     "notes": "got \"den\" instead of \"der\" — still needs work",
     "date": "2026-06-19",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -2037,7 +2037,7 @@
     "example": "Er befindet sich auf dem Weg der Genesung.",
     "notes": "≠ die Erholung (rest/recreation generally)",
     "date": "2026-06-26",
-    "review": true,
+    "review": false,
     "gender": "die"
   },
   {
@@ -2050,7 +2050,7 @@
     "example": "Nebenwirkungen müssen manchmal in Kauf genommen werden.",
     "notes": "≠ dulden (passive tolerance); ≠ tolerieren (too neutral)",
     "date": "2026-06-26",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -2063,7 +2063,7 @@
     "example": "Man kann Herzkrankheiten vorbeugen.",
     "notes": "≠ verhindern (reactive); Dativ: einer Krankheit vorbeugen",
     "date": "2026-06-26",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -2076,7 +2076,7 @@
     "example": "Erst wenn der Leidensdruck groß genug ist, suchen viele Hilfe.",
     "notes": "≠ die Schmerzgrenze (pain threshold)",
     "date": "2026-06-26",
-    "review": true,
+    "review": false,
     "gender": "der"
   },
   {
@@ -2297,7 +2297,7 @@
     "example": "Maßnahmen gegen die Zersiedelung des Umlandes",
     "notes": "Feminine. No plural. ≠ die Stadtausbreitung (generic expansion, no uncontrolled-scattering sense)",
     "date": "2026-07-01",
-    "review": true,
+    "review": false,
     "gender": "die"
   },
   {
@@ -2310,7 +2310,7 @@
     "example": "Bauland erschließen / einen Markt erschließen",
     "notes": "Inseparable (er-). erschloss / erschlossen. ≠ ausbauen (expand what's already there — not first-time access)",
     "date": "2026-07-01",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -2323,7 +2323,7 @@
     "example": "Der Bürgermeister will die Stadtentwicklung vorantreiben.",
     "notes": "trieb voran / vorangetrieben. Separable. ≠ nach vorne treiben (not idiomatic). Related: voranbringen (softer)",
     "date": "2026-07-01",
-    "review": true,
+    "review": false,
     "gender": null
   },
   {
@@ -2349,7 +2349,7 @@
     "example": "Die Aufwertung des Viertels hat viele Mieter verdrängt.",
     "notes": "Feminine. Neutral in planning; loaded in social commentary. Related: die Gentrifizierung (journalistic/critical register)",
     "date": "2026-07-01",
-    "review": true,
+    "review": false,
     "gender": "die"
   },
   {
@@ -2364,5 +2364,122 @@
     "date": "2026-07-01",
     "review": false,
     "gender": "die"
+  },
+  {
+    "id": 182,
+    "german": "schüren",
+    "plural": null,
+    "english": "to stir up/incite",
+    "category": "Verb",
+    "type_raw": "verb",
+    "example": "Der Kommentar schürte Empörung in den sozialen Medien.",
+    "notes": "≠ aufwühlen (emotional impact on the person, not deliberate incitement); ≠ aufheizen (heats up general atmosphere, less targeted)",
+    "date": "2026-07-02",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 183,
+    "german": "voranbringen",
+    "plural": null,
+    "english": "to bring forward/make progress on",
+    "category": "Verb",
+    "type_raw": "verb",
+    "example": "Die Reform wurde durch den neuen Ausschuss vorangebracht.",
+    "notes": "≠ vorantreiben (more forceful, active push)",
+    "date": "2026-07-02",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 184,
+    "german": "die Erklärung",
+    "plural": "-en",
+    "english": "(formal) statement, declaration",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Der Minister gab eine Erklärung ab.",
+    "notes": "≠ die Ansage (too casual/presentational for a formal statement)",
+    "date": "2026-07-02",
+    "review": false,
+    "gender": "die"
+  },
+  {
+    "id": 185,
+    "german": "die Stellungnahme",
+    "plural": "-n",
+    "english": "(official) statement, position statement",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Das Ministerium veröffentlichte eine Stellungnahme zu den Vorwürfen.",
+    "notes": "close to Erklärung, more \"response to a specific matter\"",
+    "date": "2026-07-02",
+    "review": false,
+    "gender": "die"
+  },
+  {
+    "id": 186,
+    "german": "jüngst",
+    "plural": null,
+    "english": "recent, most recent",
+    "category": "Adjective",
+    "type_raw": "adjective",
+    "example": "der jüngste Skandal",
+    "notes": "≠ neulich/kürzlich (adverb-only, can't precede a noun)",
+    "date": "2026-07-02",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 187,
+    "german": "unter Verschluss halten",
+    "plural": null,
+    "english": "to keep under lock and key/classified",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "Der Bericht wurde monatelang unter Verschluss gehalten.",
+    "notes": "idiomatic alternative to vorenthalten",
+    "date": "2026-07-02",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 188,
+    "german": "auf Kritik stoßen",
+    "plural": null,
+    "english": "to meet with/draw criticism",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "Die Maßnahmen stießen auf breite Kritik.",
+    "notes": "stoßen auf + Akk",
+    "date": "2026-07-02",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 189,
+    "german": "im Hinblick auf (+Akk)",
+    "plural": null,
+    "english": "in view of, with regard to (+Akk)",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "Im Hinblick auf den jüngsten Skandal...",
+    "notes": "≠ mit Hinsicht auf (not idiomatic)",
+    "date": "2026-07-02",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 190,
+    "german": "in Anbetracht (+Gen)",
+    "plural": null,
+    "english": "in view of, considering",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "In Anbetracht der Umstände...",
+    "notes": "synonym of angesichts/im Hinblick auf",
+    "date": "2026-07-02",
+    "review": false,
+    "gender": null
   }
 ]
