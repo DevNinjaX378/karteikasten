@@ -2481,5 +2481,70 @@
     "date": "2026-07-02",
     "review": false,
     "gender": null
+  },
+  {
+    "id": 191,
+    "german": "die Reform",
+    "plural": "-en",
+    "english": "reform",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Die Reform wurde von der Regierung vorangetrieben.",
+    "notes": "Feminine — often mistaken for masculine",
+    "date": "2026-07-03",
+    "review": false,
+    "gender": "die"
+  },
+  {
+    "id": 192,
+    "german": "das Misstrauen",
+    "plural": null,
+    "english": "mistrust",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Das Misstrauen zwischen den Parteien wuchs zusehends.",
+    "notes": "Not *Missvertrauen* (doesn't exist)",
+    "date": "2026-07-03",
+    "review": false,
+    "gender": "das"
+  },
+  {
+    "id": 193,
+    "german": "begrüßen",
+    "plural": null,
+    "english": "to welcome / \"welcomed by\" in an EPA",
+    "category": "Verb",
+    "type_raw": "verb",
+    "example": "Der Vorschlag wurde von den Mitarbeitern begrüßt.",
+    "notes": "≠ willkommen (adjective only, can't be used as a participle)",
+    "date": "2026-07-03",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 194,
+    "german": "erhärten",
+    "plural": null,
+    "english": "to corroborate",
+    "category": "Verb",
+    "type_raw": "verb",
+    "example": "Der Verdacht erhärtete sich nach weiteren Zeugenaussagen.",
+    "notes": "≠ bestätigen (general confirm, no prior-suspicion nuance)",
+    "date": "2026-07-03",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 195,
+    "german": "einschlägig",
+    "plural": null,
+    "english": "relevant, pertinent, applicable",
+    "category": "Adjective",
+    "type_raw": "adjective",
+    "example": "Haben Sie einschlägige Berufserfahrung in diesem Bereich?",
+    "notes": null,
+    "date": "",
+    "review": false,
+    "gender": null
   }
 ]
