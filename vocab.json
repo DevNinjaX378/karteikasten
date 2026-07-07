@@ -2598,5 +2598,57 @@
     "date": "2026-07-05",
     "review": false,
     "gender": null
+  },
+  {
+    "id": 200,
+    "german": "die Voreingenommenheit",
+    "plural": null,
+    "english": "bias",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Ihm wurde Voreingenommenheit gegenüber bestimmten Bewerbern vorgeworfen.",
+    "notes": "≠ Vorurteil (specific judgment); ≠ Parteilichkeit (partisan bias)",
+    "date": "2026-07-07",
+    "review": false,
+    "gender": "die"
+  },
+  {
+    "id": 201,
+    "german": "die Parteilichkeit",
+    "plural": null,
+    "english": "partisan bias",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Der Schiedsrichter wurde wegen Parteilichkeit kritisiert.",
+    "notes": "narrower than Voreingenommenheit — favors one specific side",
+    "date": "2026-07-07",
+    "review": false,
+    "gender": "die"
+  },
+  {
+    "id": 202,
+    "german": "die Befangenheit",
+    "plural": null,
+    "english": "bias / conflict of interest (legal)",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Der Richter erklärte seine Befangenheit und zog sich aus dem Verfahren zurück.",
+    "notes": "legal/procedural register; recusal — wegen Befangenheit",
+    "date": "2026-07-07",
+    "review": false,
+    "gender": "die"
+  },
+  {
+    "id": 203,
+    "german": "hinterfragen",
+    "plural": null,
+    "english": "to question / scrutinize critically",
+    "category": "Verb",
+    "type_raw": "verb",
+    "example": "Es ist wichtig, gängige Annahmen kritisch zu hinterfragen.",
+    "notes": "≠ fragen (simple asking); implies deeper critical probing",
+    "date": "2026-07-07",
+    "review": false,
+    "gender": null
   }
 ]
