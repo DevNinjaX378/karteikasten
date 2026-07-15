@@ -3014,5 +3014,70 @@
     "date": "2026-07-10",
     "review": false,
     "gender": null
+  },
+  {
+    "id": 232,
+    "german": "verklären",
+    "plural": null,
+    "english": "to romanticize",
+    "category": "Verb",
+    "type_raw": "verb",
+    "example": "Sie verklärt ihre Studienzeit.",
+    "notes": "≠ romantisieren (correct spelling, not romantizieren)",
+    "date": "2026-07-15",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 233,
+    "german": "abseits der ausgetretenen Pfade",
+    "plural": null,
+    "english": "off the beaten path",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "Ein Dorf abseits der ausgetretenen Pfade, das die meisten Touristen nie finden.",
+    "notes": "takes the genitive",
+    "date": "2026-07-15",
+    "review": false,
+    "gender": null
+  },
+  {
+    "id": 234,
+    "german": "das Beste aus etw. machen",
+    "plural": null,
+    "english": "to make the most of sth.",
+    "category": "Noun",
+    "type_raw": "expression",
+    "example": "Wir sollten das Beste aus unserer kurzen Zeit hier machen.",
+    "notes": null,
+    "date": "2026-07-15",
+    "review": false,
+    "gender": "das"
+  },
+  {
+    "id": 235,
+    "german": "die Naturkatastrophe",
+    "plural": "-n",
+    "english": "natural disaster",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "sei es eine Pandemie oder eine Naturkatastrophe",
+    "notes": "fixed compound; not \"natürliches Desaster\"",
+    "date": "2026-07-15",
+    "review": false,
+    "gender": "die"
+  },
+  {
+    "id": 236,
+    "german": "in letzter Minute",
+    "plural": null,
+    "english": "at the last minute",
+    "category": "Expression",
+    "type_raw": "expression",
+    "example": "Sie fanden in letzter Minute noch ein Zimmer.",
+    "notes": "≠ in der letzten Minute (literally \"in the last minute of...\")",
+    "date": "2026-07-15",
+    "review": false,
+    "gender": null
   }
 ]
