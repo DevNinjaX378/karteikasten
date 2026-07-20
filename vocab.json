@@ -3261,5 +3261,31 @@
     "date": "2026-07-17",
     "review": false,
     "gender": null
+  },
+  {
+    "id": 251,
+    "german": "der Kognitionswissenschaftler",
+    "plural": null,
+    "english": "cognitive scientist",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Neue Gedächtnistechniken werden ständig von Kognitionswissenschaftlern entwickelt.",
+    "notes": "Compounds use noun stem (Kognitions-), not adjective stem (Kognitiv-)",
+    "date": "2026-07-20",
+    "review": false,
+    "gender": "der"
+  },
+  {
+    "id": 252,
+    "german": "auswerten",
+    "plural": null,
+    "english": "to evaluate, analyse, process (data/results)",
+    "category": "Verb",
+    "type_raw": "verb",
+    "example": "Die Ergebnisse werden von einem unabhängigen Ausschuss ausgewertet.",
+    "notes": "≠ bewerten (to judge/assess — implies a value judgement); ≠ beurteilen (to evaluate against a standard)",
+    "date": "2026-07-20",
+    "review": false,
+    "gender": null
   }
 ]
