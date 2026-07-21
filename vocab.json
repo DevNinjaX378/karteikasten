@@ -3287,5 +3287,31 @@
     "date": "2026-07-20",
     "review": false,
     "gender": null
+  },
+  {
+    "id": 253,
+    "german": "das Ehrenamt",
+    "plural": "-¨er",
+    "english": "volunteering / honorary civic role",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Er engagiert sich seit Jahren in einem Ehrenamt bei der örtlichen Feuerwehr.",
+    "notes": "adj. form ehrenamtlich; umlaut plural like das Amt/die Ämter",
+    "date": "2026-07-21",
+    "review": false,
+    "gender": "das"
+  },
+  {
+    "id": 254,
+    "german": "ausgleichen",
+    "plural": null,
+    "english": "to compensate for / offset",
+    "category": "Verb",
+    "type_raw": "verb",
+    "example": "Ihre mangelnde Erfahrung gleicht sie durch außergewöhnliches Engagement aus.",
+    "notes": "not ersetzen (replace); separable, takes durch for the means",
+    "date": "2026-07-21",
+    "review": false,
+    "gender": null
   }
 ]
