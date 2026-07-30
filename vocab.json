@@ -3313,5 +3313,57 @@
     "date": "2026-07-21",
     "review": false,
     "gender": null
+  },
+  {
+    "id": 255,
+    "german": "das Fachwissen",
+    "plural": null,
+    "english": "specialist knowledge / professional expertise",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Das Fachwissen der Mentoren war entscheidend.",
+    "notes": "From Fach- (specialist) + Wissen (knowledge); related: Fachkompetenz",
+    "date": "2026-07-30",
+    "review": false,
+    "gender": "das"
+  },
+  {
+    "id": 256,
+    "german": "die Fachkompetenz",
+    "plural": null,
+    "english": "professional / specialist competence",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Sie brachte ihre Fachkompetenz in das Projekt ein.",
+    "notes": "More formal/professional register than Fachwissen; increasingly used in HR contexts",
+    "date": "2026-07-30",
+    "review": false,
+    "gender": "die"
+  },
+  {
+    "id": 257,
+    "german": "das Engagement",
+    "plural": null,
+    "english": "commitment, involvement (civic, professional, personal)",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Das soziale Engagement war beeindruckend.",
+    "notes": "From French; also used as verb: sich engagieren; not Verlobung (betrothal)",
+    "date": "2026-07-30",
+    "review": false,
+    "gender": "das"
+  },
+  {
+    "id": 258,
+    "german": "die Bürgerpflicht",
+    "plural": "-en",
+    "english": "civic duty, citizen's duty",
+    "category": "Noun",
+    "type_raw": "noun",
+    "example": "Es ist unsere Bürgerpflicht zu helfen.",
+    "notes": "From Bürger (citizen) + Pflicht (duty); related: Bürgerbeteiligung, Bürgerengagement",
+    "date": "2026-07-30",
+    "review": false,
+    "gender": "die"
   }
 ]
